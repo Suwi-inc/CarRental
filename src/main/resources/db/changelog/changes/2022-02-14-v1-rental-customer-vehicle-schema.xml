@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <changeSet  id="1"  author="Suwi" runOnChange="true">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <not>
+                    <tableExists tableName="customer"/>
+                </not>
+                <not>
+                    <tableExists tableName="vehicle"/>
+                </not>
+                <not>
+                    <tableExists tableName="rental"/>
+                </not>
+            </and>
+        </preConditions>
+
+        <createTable  tableName="customer">
+            <column  name="id"  type="bigint"  autoIncrement="true">
+                <constraints primaryKey="true"   nullable="false"/>
+            </column>
+            <column  name="fullName"  type="nvarchar2(50)"  >
+                <constraints   nullable="false"/>
+            </column>
+            <column  name="address"  type="nvarchar2(50)"  >
+                <constraints   nullable="false"/>
+            </column>
+            <column  name="phoneNumber"  type="bigint" >
+                <constraints   nullable="false"/>
+            </column>
+
+        </createTable>
+        
+        <createTable tableName="vehicle">
+            <column  name="id"  type="bigint"  autoIncrement="true">
+                <constraints   primaryKey="true"  nullable="false"/>
+            </column>
+            <column  name="carName"  type="nvarchar2(50)"  >
+                <constraints   nullable="false"/>
+            </column>
+            <column  name="model"  type="nvarchar2(50)"  >
+                <constraints   nullable="false"/>
+            </column>
+            <column  name="registration"  type="nvarchar2(10)"  >
+                <constraints   nullable="false"/>
+            </column>
+            <column  name="colour"  type="nvarchar2(10)"  >
+                <constraints   nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="rental">
+            <column  name="id"  type="bigint"  autoIncrement="true">
+                <constraints  primaryKey="true"   nullable="false"/>
+            </column>
+            <column  name="price"  type="real" >
+                <constraints   nullable="false"/>
+            </column>
+            <column  name="startDate"  type="date" >
+                <constraints   nullable="false"/>
+            </column>
+            <column  name="endDate"  type="date" >
+                <constraints   nullable="false"/>
+            </column>
+            <column  name="vehicleID"  type="bigint" >
+                <constraints   nullable="false"/>
+            </column>
+            <column  name="customerID"  type="bigint" >
+                <constraints   nullable="false"/>
+            </column>
+
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="rental" baseColumnNames="vehicleID" constraintName="FK_rental_vehicle_ID" referencedTableName="vehicle"
+                         referencedColumnNames="id" />
+
+        <addForeignKeyConstraint baseTableName="rental" baseColumnNames="customerID" constraintName="FK_rental_customer_ID" referencedTableName="customer"
+                                 referencedColumnNames="id"/>
+
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="rental" constraintName="FK_rental_vehicle_ID"/>
+            <dropForeignKeyConstraint baseTableName="rental" constraintName="FK_rental_customer_ID"/>
+            <dropTable tableName="customer"/>
+            <dropTable tableName="vehicle"/>
+            <dropTable tableName="rental"/>
+        </rollback>
+        
+    </changeSet>
+</databaseChangeLog>

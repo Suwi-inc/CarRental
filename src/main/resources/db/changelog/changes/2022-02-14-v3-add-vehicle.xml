@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <changeSet  id="3"  author="Suwi" runOnChange="true">
+        <preConditions onFail="MARK_RAN" >
+            <tableIsEmpty tableName="vehicle"/>
+        </preConditions>
+        <insert tableName="vehicle">
+            <column name="carName">Mercedez</column>
+            <column name="model">e200</column>
+            <column name="registration">a001</column>
+            <column name="colour">black</column>
+        </insert>
+        <insert tableName="vehicle">
+            <column name="carName">BMW</column>
+            <column name="model">M3</column>
+            <column name="registration">a002</column>
+            <column name="colour">grey</column>
+        </insert>
+        <insert tableName="vehicle">
+            <column name="carName">Toyota</column>
+            <column name="model">Camry</column>
+            <column name="registration">a003</column>
+            <column name="colour">red</column>
+        </insert>
+        <rollback>
+            <delete tableName="vehicle"/>
+        </rollback>
+    </changeSet>
+
+
+
+</databaseChangeLog>

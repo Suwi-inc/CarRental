@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+
+    <changeSet  id="2"  author="Suwi" runOnChange="true">
+        <preConditions onFail="MARK_RAN">
+            <tableIsEmpty tableName="customer"/>
+        </preConditions>
+        <insert tableName="customer">
+            <column name="fullName">Сувиланджи Кампамба Силвамба</column>
+            <column name="address">Воронеж, ул. Холзунова 35</column>
+            <column name="phoneNumber">87999332</column>
+        </insert>
+        <insert tableName="customer">
+            <column name="fullName">Иванов Иван Иванович</column>
+            <column name="address">Воронеж, ул. Холзунова 45</column>
+            <column name="phoneNumber">87455578</column>
+        </insert>
+        <insert tableName="customer">
+            <column name="fullName">Петров Иван Иванович</column>
+            <column name="address">Воронеж, ул. Холзунова 42</column>
+            <column name="phoneNumber">89567845</column>
+        </insert>
+        <rollback>
+            <delete tableName="customer"/>
+        </rollback>
+    </changeSet>
+
+
+
+</databaseChangeLog>
